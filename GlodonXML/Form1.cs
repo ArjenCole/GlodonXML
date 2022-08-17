@@ -156,13 +156,10 @@ namespace GlodonXML
             dgvNormTitle.Columns.Clear();
             dgvNormTitle.Columns.Add("NormItem", "NormItem");
             dgvNormTitle.Rows.Clear();
-            int tRowCount = 0;
-            foreach (var fe in pPL.NormTable)
-                tRowCount = tRowCount + fe.NormItem.Count();
-            if (tRowCount == 0) return;
-            dgvNormTitle.Rows.Add(tRowCount);
+            dgvNormTitle.Rows.Add(pPL.NormTable.Count + 1);
 
             int i = 0;
+            double sumNormTitle = 0;
             foreach (mcNormItemTitle feNTIT in pPL.NormTable)
             {
                 double tDouble = 0;
@@ -184,7 +181,11 @@ namespace GlodonXML
                     dgvNormTitle.Columns.Add("Total", "Total");
                 dgvNormTitle.Rows[i].Cells["Total"].Value = tDouble;
                 i++;
+                sumNormTitle += tDouble;
             }
+
+            dgvNormTitle.Rows[i + 1].Cells["Total"].Value = sumNormTitle;
+
         }
 
         private void flash_dgvResource(mcProjectList pPL)
