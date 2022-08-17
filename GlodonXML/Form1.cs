@@ -16,15 +16,6 @@ namespace GlodonXML
         public Form1()
         {
             InitializeComponent();
-
-
-            //XElement tXE = XElement.Load("杨高南路（高科西路-外环立交）1标段 - 1.SGTYS");
-            //XElement tXE = XElement.Load("市政工程.XML");
-            XElement tXE = XElement.Load("学府路东延.xml");
-            //XElement tXE = XElement.Load("徐州市汉源大道快速化改造工程.xml");
-            mcConstructProject_Norm mCPN = new mcConstructProject_Norm(tXE);
-
-            Flash_tvConstructProject(mCPN);
         }
 
         #region 树状结构
@@ -82,6 +73,20 @@ namespace GlodonXML
 
             flash_dgvResource(tPL);
 
+        }
+
+        private void flash_All(string pStr)
+        {
+            //XElement tXE = XElement.Load("杨高南路（高科西路-外环立交）1标段 - 1.SGTYS");
+            //XElement tXE = XElement.Load("市政工程.XML");
+            //XElement tXE = XElement.Load("学府路东延.xml");
+            //XElement tXE = XElement.Load("徐州市汉源大道快速化改造工程.xml");
+
+            
+            XElement tXE = XElement.Load(pStr);
+            mcConstructProject_Norm mCPN = new mcConstructProject_Norm(tXE);
+
+            Flash_tvConstructProject(mCPN);
         }
 
         private void flash_dgvAttributes(mcProjectList pPL)
@@ -205,6 +210,20 @@ namespace GlodonXML
                 i++;
             }
         }
+
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var t = ((DataGridView)sender).CurrentCell.Value;
+            if (t != null) { mscFunction.CopyToClipBoard(t.ToString()); }
+        }
+
+        private void tsmiOpen_Click(object sender, EventArgs e)
+        {
+            string tStr = mscFunction.getOpenPath();
+            //flash_All("徐州市汉源大道快速化改造工程.xml");
+            flash_All(tStr);
+        }
+
 
     }
 }
